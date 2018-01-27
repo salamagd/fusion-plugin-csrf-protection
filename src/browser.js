@@ -7,12 +7,12 @@
 // @flow
 /* eslint-env browser */
 import {unescape, createPlugin} from 'fusion-core';
-import {FetchToken} from 'fusion-tokens';
+import {FetchForCsrfToken} from './tokens';
 import {verifyMethod, verifyExpiry, CSRFTokenExpire} from './shared';
 
 const BrowserCSRFPlugin = createPlugin({
   deps: {
-    fetch: FetchToken,
+    fetch: FetchForCsrfToken,
     expire: CSRFTokenExpire,
   },
   provides: ({fetch, expire}) => {
