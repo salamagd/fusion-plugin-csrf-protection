@@ -11,8 +11,8 @@ import base64Url from 'base64-url';
 import {
   verifyMethod,
   verifyExpiry,
-  CSRFIgnoreRoutes,
-  CSRFTokenExpire,
+  CsrfIgnoreRoutesToken,
+  CsrfExpireToken,
 } from './shared';
 
 // @flow
@@ -52,8 +52,8 @@ function loadOrGenerateSecret(session) {
 const CsrfPlugin = createPlugin({
   deps: {
     Session: SessionToken,
-    expire: CSRFTokenExpire,
-    ignored: CSRFIgnoreRoutes,
+    expire: CsrfExpireToken,
+    ignored: CsrfIgnoreRoutesToken,
   },
   provides: () => () =>
     Promise.reject(new Error('Cannot use fetch on the server')),
@@ -79,8 +79,7 @@ const CsrfPlugin = createPlugin({
       if (!isMatchingToken || !isValidToken) {
         const message = __DEV__
           ? 'CSRF Token configuration error: ' +
-            'add the option {fetch: CsrfToken.fetch} to ' +
-            'the 2nd argument of app.plugin(yourPlugin)'
+            'register the CsrfProtection plugin to FetchToken'
           : 'Invalid CSRF Token';
         ctx.throw(403, message);
       } else {

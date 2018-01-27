@@ -7,13 +7,17 @@
 // @flow
 /* eslint-env browser */
 import {unescape, createPlugin} from 'fusion-core';
-import {FetchForCsrfToken} from './tokens';
-import {verifyMethod, verifyExpiry, CSRFTokenExpire} from './shared';
+import {
+  verifyMethod,
+  verifyExpiry,
+  CsrfExpireToken,
+  FetchForCsrfToken,
+} from './shared';
 
 const BrowserCSRFPlugin = createPlugin({
   deps: {
     fetch: FetchForCsrfToken,
-    expire: CSRFTokenExpire,
+    expire: CsrfExpireToken,
   },
   provides: ({fetch, expire}) => {
     const prefix = window.__ROUTE_PREFIX__ || ''; // created by fusion-core/src/server
